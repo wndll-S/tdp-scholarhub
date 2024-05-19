@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('occupation',50);
             $table->string('employer_name',100);
             $table->string('employer_address', 100);
-            $table->integer('annual_gross_income',10);
+            $table->integer('annual_gross_income');
             $table->enum('status', ['Living', 'Deceased'])
                     ->default('Living');
             $table->enum('relationship', ['Father', 'Mother', 'Legal Guardian']);

@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Student;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +18,16 @@ class StudentAddressFactory extends Factory
      */
     public function definition(): array
     {
+        $student = Student::pluck('id')->toArray();
         return [
-            //
+            'id' => $this->faker->uuid,
+            'student_id' => $this->faker->randomElement($student),
+            'barangay' => $this->faker->streetAddress(),
+            'city_town' => $this->faker->city(),
+            'district' => $this->faker->numberBetween(1,8),
+            'zip_code' => $this->faker->numberBetween(1111,9999),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ];
     }
 }

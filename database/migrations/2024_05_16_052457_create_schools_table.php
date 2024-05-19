@@ -15,8 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('name');
             $table->string('address');
-            $table->enum('school_type', ['Public', 'Private'])
-                    ->default('');
+            $table->enum('school_type', ['Public', 'Private']);
             $table->string('email_address', 100)->unique();
             $table->float('contact_number',10)->unique();
             $table->text('password');

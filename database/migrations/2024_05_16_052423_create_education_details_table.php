@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('lrn', 12);
             $table->string('course', 50);
             $table->string('major',50);
-            $table->integer('year_level', 1);
+            $table->integer('year_level');
             $table->timestamps();
 
             $table->foreign('student_id')

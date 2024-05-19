@@ -13,17 +13,18 @@ return new class extends Migration
     {
         Schema::create('announcements', function (Blueprint $table) {
             $table->id();
-            $table->foreign('admin_id')
-                ->references('id')
-                ->on('admins')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
+            $table->foreignId('admin_id');
             $table->uuid('school_id');
             $table->string('title', 100);
             $table->text('message');
             $table->boolean('is_for_all');
             $table->timestamps();
 
+            $table->foreign('admin_id')
+                ->references('id')
+                ->on('admins')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->foreign('school_id')
                     ->references('id')
                     ->on('schools')

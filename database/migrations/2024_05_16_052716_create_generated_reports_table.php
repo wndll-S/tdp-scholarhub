@@ -13,14 +13,16 @@ return new class extends Migration
     {
         Schema::create('generated_reports', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('admin_id');
+            $table->string('report_name', 50);
+            $table->text('description');
+            $table->timestamps();
+
             $table->foreign('admin_id')
                 ->references('id')
                 ->on('admins')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->string('report_name', 50);
-            $table->text('description');
-            $table->timestamps();
         });
     }
 

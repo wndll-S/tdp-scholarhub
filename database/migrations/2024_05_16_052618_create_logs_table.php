@@ -13,13 +13,15 @@ return new class extends Migration
     {
         Schema::create('logs', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('admin_id');
+            $table->text('action');
+            $table->timestamps();
+
             $table->foreign('admin_id')
                 ->references('id')
                 ->on('admins')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->text('action');
-            $table->timestamps();
         });
     }
 

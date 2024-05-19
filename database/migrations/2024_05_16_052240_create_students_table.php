@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('birth_place', 255);
             $table->enum('sex', ['male', 'female'])
                     ->nullable();
+            $table->string('citizenship');
             $table->enum('civil_status', ['Single', 'Married', 'Annulled', 'Widowed', 'Separated', 'Others'])
                     ->default('Single');
             $table->string('ip_affiliation', 255);

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\StudentAddress;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,8 @@ class StudentAddressSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        StudentAddress::factory()
+                ->count(40)
+                ->create();
     }
 }

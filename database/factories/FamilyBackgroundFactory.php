@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Student;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +18,14 @@ class FamilyBackgroundFactory extends Factory
      */
     public function definition(): array
     {
+        $student = Student::pluck('id')->toArray();
         return [
-            //
+            'id' => $this->faker->uuid(),
+            'student_id' =>$this->faker->randomElement($student),
+            'total_gross_income' => $this->faker->numberBetween(1000,400000),
+            'number_of_siblings' => $this->faker->numberBetween(0,10),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ];
     }
 }

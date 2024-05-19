@@ -15,8 +15,7 @@ return new class extends Migration
             $table->id();
             $table->uuid('student_id');
             $table->uuid('school_id');
-            $table->enum('document_type', ['Report Card', 'Certificate of Enrolment', 'Birth Certificate', 'ITR', 'Tax Exemption','Certificate of Indigency','DSWD Case Study', 'OFW Contract'])
-                    ->default('');
+            $table->enum('document_type', ['Report Card', 'Certificate of Enrolment', 'Birth Certificate', 'ITR', 'Tax Exemption','Certificate of Indigency','DSWD Case Study', 'OFW Contract']);
             $table->text('file_path');
             $table->timestamps();
 
@@ -28,7 +27,7 @@ return new class extends Migration
 
             $table->foreign('school_id')
                 ->references('id')
-                ->on('school_id')
+                ->on('schools')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });

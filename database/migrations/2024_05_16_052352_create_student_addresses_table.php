@@ -16,8 +16,8 @@ return new class extends Migration
             $table->uuid('student_id');
             $table->string('barangay', 50);
             $table->string('city_town', 50);
-            $table->integer('district', 1);
-            $table->integer('zip_code',4);
+            $table->integer('district');
+            $table->integer('zip_code');
             $table->timestamps();
 
             $table->foreign('student_id')

@@ -13,15 +13,16 @@ return new class extends Migration
     {
         Schema::create('announcement_recipients', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('announcement_id');
+            $table->uuid('student_id');
+            $table->enum('status', ['Read', 'Unread', 'Favorite']);
+            $table->timestamps();
+
             $table->foreign('announcement_id')
                 ->references('id')
                 ->on('announcements')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->uuid('student_id');
-            $table->enum('status', ['Read', 'Unread', 'Favorite']);
-            $table->timestamps();
-
             $table->foreign('student_id')
                 ->references('id')
                 ->on('students')

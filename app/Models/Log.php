@@ -15,6 +15,7 @@ class Log extends Model
     protected $fillable = [
         'id',
         'admin_id',
+        'action',
         'created_at',
         'updated_at',
     ];

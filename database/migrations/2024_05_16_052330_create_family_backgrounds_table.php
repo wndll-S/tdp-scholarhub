@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->uuid('student_id');
             $table->double('total_gross_income');
-            $table->integer('number_of_siblings', 2);
+            $table->integer('number_of_siblings');
             $table->timestamps();
 
             $table->foreign('student_id')

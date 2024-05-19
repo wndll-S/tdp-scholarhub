@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,13 @@ class AdminFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'username' => $this->faker->userName,
+            'email_address' => $this->faker->safeEmail(),
+            'password' => $this->faker->password,
+            'role' => $this->faker->numberBetween(1,3),
+            'status' => $this->faker->numberBetween(1,3),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ];
     }
 }
