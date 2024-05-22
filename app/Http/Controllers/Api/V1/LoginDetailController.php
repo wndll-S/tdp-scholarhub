@@ -1,10 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
 use App\Models\LoginDetail;
 use App\Http\Requests\StoreLoginDetailRequest;
 use App\Http\Requests\UpdateLoginDetailRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\V1\LoginDetailResource;
+use App\Http\Resources\V1\LoginDetailCollection;
 
 class LoginDetailController extends Controller
 {
@@ -13,7 +16,7 @@ class LoginDetailController extends Controller
      */
     public function index()
     {
-        //
+        return new LoginDetailCollection( LoginDetail::paginate());
     }
 
     /**
@@ -37,7 +40,7 @@ class LoginDetailController extends Controller
      */
     public function show(LoginDetail $loginDetail)
     {
-        //
+        return new LoginDetailResource($loginDetail) ;
     }
 
     /**

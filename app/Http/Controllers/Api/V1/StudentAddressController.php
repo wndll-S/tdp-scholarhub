@@ -1,19 +1,32 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
 use App\Models\StudentAddress;
 use App\Http\Requests\StoreStudentAddressRequest;
 use App\Http\Requests\UpdateStudentAddressRequest;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Http\Resources\V1\StudentAddressResource;
+use App\Http\Resources\V1\StudentAddressCollection;
+use App\Filters\V1\StudentAddressFilter;
 
 class StudentAddressController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $filter = new StudentAddressFilter();
+        $queryItems = $filter->transform($request);
+
+        if(count($queryItems) == 0){
+            return new StudentAddressCollection(StudentAddress::paginate());
+        }else{
+            $students = StudentAddress::where($queryItems)->paginate();
+            return new StudentAddressCollection($students->appends($request->query()));
+        }
     }
 
     /**

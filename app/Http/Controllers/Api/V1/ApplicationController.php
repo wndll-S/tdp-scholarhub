@@ -1,19 +1,33 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
+use App\Filters\V1\ApplicationFilter;
 use App\Models\Application;
 use App\Http\Requests\StoreApplicationRequest;
 use App\Http\Requests\UpdateApplicationRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\V1\ApplicationResource;
+use App\Http\Resources\V1\ApplicationCollection;
+use Illuminate\Http\Request;
 
 class ApplicationController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $filter = new ApplicationFilter();
+        $queryItems = $filter->transform($request);
+
+        if(count($queryItems) == 0){
+            return new ApplicationCollection(Application::paginate());
+        }else{
+            $applications = Application::where($queryItems)->paginate();
+            return new ApplicationCollection($applications->appends($request->query()));
+        }
+
     }
 
     /**
@@ -37,7 +51,7 @@ class ApplicationController extends Controller
      */
     public function show(Application $application)
     {
-        //
+        return new ApplicationResource($application);
     }
 
     /**

@@ -1,19 +1,34 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
 use App\Models\Student;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
+use App\Http\Controllers\Controller;
+use App\http\Resources\V1\StudentResource;
+use App\http\Resources\V1\StudentCollection;
+use Illuminate\Http\Request;
+use App\Filters\V1\StudentFilter;
 
 class StudentController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * 
      */
-    public function index()
+    
+    public function index(Request $request)
     {
-        //
+        $filter = new StudentFilter();
+        $queryItems = $filter->transform($request);
+
+        if(count($queryItems) == 0){
+            return new StudentCollection(Student::paginate());
+        }else{
+            $students = Student::where($queryItems)->paginate();
+            return new StudentCollection($students->appends($request->query()));
+        }
     }
 
     /**
@@ -37,7 +52,7 @@ class StudentController extends Controller
      */
     public function show(Student $student)
     {
-        //
+        return new StudentResource($student);
     }
 
     /**

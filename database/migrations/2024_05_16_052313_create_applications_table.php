@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->uuid('student_id');
             $table->integer('ranking_pts');
-            $table->enum('status', ['Pending', 'Approved', 'Rejected', 'Screening'])
+            $table->enum('status', ['Pending', 'Approved', 'Rejected', 'Screened'])
                     ->default('Pending');
             $table->timestamps();
 
