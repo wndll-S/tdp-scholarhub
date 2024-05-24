@@ -21,14 +21,40 @@ class StudentController extends Controller
     public function index(Request $request)
     {
         $filter = new StudentFilter();
-        $queryItems = $filter->transform($request);
+        $filterItems = $filter->transform($request);
 
-        if(count($queryItems) == 0){
-            return new StudentCollection(Student::paginate());
-        }else{
-            $students = Student::where($queryItems)->paginate();
-            return new StudentCollection($students->appends($request->query()));
-        }
+        $relationships = [];
+
+          if ($request->query('includeApplication')) {
+               $relationships[] = 'applications';
+          }
+       if($request->query('includeStudentAddress')){
+            $relationships[] = 'student_address';
+       }
+       if($request->query('includeFamilyBackground')){
+            $relationships[] = 'family_background';
+       }
+       if($request->query('includeLoginDetail')){
+            $relationships[] = 'login_detail';
+       }
+       if($request->query('includeDocuments')){
+            $relationships[] = 'documents';
+       }
+       if($request->query('includeEducationDetail')){
+            $relationships[] = 'education_detail';
+       }
+       if($request->query('includeAnnouncementRecipient')){
+            $relationships[] = 'announcement_recipient';
+       }
+
+       $student = Student::where($filterItems);
+
+       if(!empty($relationships)){
+            $student = $student->with($relationships);
+       }
+
+       return new StudentCollection($student->paginate()->appends($request->query()));
+
     }
 
     /**
@@ -52,6 +78,34 @@ class StudentController extends Controller
      */
     public function show(Student $student)
     {
+        $relationships = [];
+
+       if(request()->query('includeApplication')){
+            $relationships[] = 'applications';
+       }
+       if(request()->query('includeStudentAddress')){
+            $relationships[] = 'student_address';
+       }
+       if(request()->query('includeFamilyBackground')){
+            $relationships[] = 'family_background';
+       }
+       if(request()->query('includeLoginDetail')){
+            $relationships[] = 'login_detail';
+       }
+       if(request()->query('includeDocuments')){
+            $relationships[] = 'documents';
+       }
+       if(request()->query('includeEducationDetail')){
+            $relationships[] = 'education_detail';
+       }
+       if(request()->query('includeAnnouncementRecipient')){
+            $relationships[] = 'announcement_recipient';
+       }
+
+       if(!empty($relationships)){
+            $student->loadMissing($relationships);
+       }
+
         return new StudentResource($student);
     }
 

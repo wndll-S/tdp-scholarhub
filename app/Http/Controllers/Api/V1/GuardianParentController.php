@@ -1,19 +1,32 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
+use App\Filters\V1\GuardianParentFilter;
+use App\Http\Resources\V1\GuardianParentResource;
 use App\Models\GuardianParent;
 use App\Http\Requests\StoreGuardianParentRequest;
 use App\Http\Requests\UpdateGuardianParentRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\V1\GuardianParentCollection;
+use Illuminate\Http\Request;
 
 class GuardianParentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $filter = new GuardianParentFilter();
+        $queryItems = $filter->transform($request);
+
+        if(count($queryItems) == 0){
+            return new GuardianParentCollection(GuardianParent::paginate());
+        }else{
+            $guardianParent = GuardianParent::where($queryItems)->paginate();
+            return new GuardianParentCollection($guardianParent->appends($request->query()));
+        }
     }
 
     /**
@@ -37,7 +50,7 @@ class GuardianParentController extends Controller
      */
     public function show(GuardianParent $guardianParent)
     {
-        //
+        return new GuardianParentResource($guardianParent);
     }
 
     /**

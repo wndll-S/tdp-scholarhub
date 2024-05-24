@@ -11,7 +11,7 @@ class Student extends Model
 {
     use HasFactory;
 
-    public function application(): HasOne
+    public function applications(): HasOne
     {
         return $this->hasOne(Application::class, 'student_id');
     }
@@ -27,7 +27,7 @@ class Student extends Model
     {
         return $this->hasOne(LoginDetail::class, 'student_id');
     }
-    public function document(): HasMany
+    public function documents(): HasMany
     {
         return $this->hasMany(Document::class, 'student_id');
     }

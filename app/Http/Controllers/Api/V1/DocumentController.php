@@ -50,7 +50,7 @@ class DocumentController extends Controller
      */
     public function show(Document $document)
     {
-        //
+        return new DocumentResource($document);
     }
 
     /**
@@ -58,7 +58,7 @@ class DocumentController extends Controller
      */
     public function edit(Document $document)
     {
-        return new DocumentResource($document);
+        
     }
 
     /**

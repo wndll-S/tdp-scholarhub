@@ -26,6 +26,14 @@ class StudentResource extends JsonResource
             'citizenship' => $this->citizenship,
             'civilStatus' => $this->civil_status,
             'ipAffiliation' => $this->ip_affiliation,
+            'loginDetail' => new LoginDetailResource($this->whenLoaded('login_detail')),
+            'educationDetail' => new EducationDetailResource($this->whenLoaded('education_detail')),
+            'documents' => DocumentResource::collection($this->whenLoaded('documents')),
+            'application' => new ApplicationResource($this->whenLoaded('applications')),
+            'studentAddress' => new StudentAddressResource($this->whenLoaded('student_address')),
+            'familyBackground' => new FamilyBackgroundResource($this->whenLoaded('family_background')),
+            'announcementRecipient' => ApplicationResource::collection($this->whenLoaded('announcement_recipient')),
+
         ];
     }
 }

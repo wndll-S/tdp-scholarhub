@@ -10,17 +10,17 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class School extends Model
 {
     use HasFactory;
-    public function document(): HasMany
+    public function documents(): HasMany
     {
         return $this->hasMany(Document::class,'school_id');
     }
-    public function announcement():HasMany
+    public function announcements():HasMany
     {
         return $this->hasMany(Announcement::class, 'school_id');
     }
-    public function education_detail(): HasOne
+    public function education_details(): HasMany
     {
-        return $this->hasOne(EducationDetail::class, 'school_id');
+        return $this->hasMany(EducationDetail::class, 'school_id');
     }
     public $incrementing = false;
     protected $keyType = 'string';

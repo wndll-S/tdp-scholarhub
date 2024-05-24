@@ -1,19 +1,32 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
+use App\Filters\V1\EducationDetailFilter;
 use App\Models\EducationDetail;
 use App\Http\Requests\StoreEducationDetailRequest;
 use App\Http\Requests\UpdateEducationDetailRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\V1\EducationDetailCollection;
+use App\Http\Resources\V1\EducationDetailResource;
+use Illuminate\Http\Request;
 
 class EducationDetailController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $filter = new EducationDetailFilter();
+        $queryItems = $filter->transform($request);
+
+        if(count($queryItems) == 0){
+            return new EducationDetailCollection(EducationDetail::paginate());
+        }else{
+            $education = EducationDetail::where($queryItems)->paginate();
+            return new EducationDetailCollection($education->appends($request->query()));
+        }
     }
 
     /**
@@ -29,7 +42,7 @@ class EducationDetailController extends Controller
      */
     public function store(StoreEducationDetailRequest $request)
     {
-        //
+        
     }
 
     /**
@@ -37,7 +50,7 @@ class EducationDetailController extends Controller
      */
     public function show(EducationDetail $educationDetail)
     {
-        //
+        return new EducationDetailResource($educationDetail);
     }
 
     /**

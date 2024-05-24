@@ -1,19 +1,32 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
+use App\Filters\V1\FamilyBackgroundFilter;
+use App\Http\Resources\V1\FamilyBackgroundResource;
 use App\Models\FamilyBackground;
 use App\Http\Requests\StoreFamilyBackgroundRequest;
 use App\Http\Requests\UpdateFamilyBackgroundRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\V1\FamilyBackgroundCollection;
+use Illuminate\Http\Request;
 
 class FamilyBackgroundController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $filter = new FamilyBackgroundFilter();
+        $queryItems = $filter->transform($request);
+
+        if(count($queryItems) == 0){
+            return new FamilyBackgroundCollection(FamilyBackground::paginate());
+        }else{
+            $familyBackground = FamilyBackground::where($queryItems)->paginate();
+            return new FamilyBackgroundCollection($familyBackground->appends($request->query()));
+        }
     }
 
     /**
@@ -37,7 +50,7 @@ class FamilyBackgroundController extends Controller
      */
     public function show(FamilyBackground $familyBackground)
     {
-        //
+        return new FamilyBackgroundResource($familyBackground);
     }
 
     /**
