@@ -19,6 +19,7 @@ class ApplicationResource extends JsonResource
             'studentId' => $this->student_id,
             'rankingPoints' => $this->ranking_pts,
             'status' => $this->status,
+            'student' => new ApplicationResource($this->whenLoaded('student')),
         ];
     }
 }

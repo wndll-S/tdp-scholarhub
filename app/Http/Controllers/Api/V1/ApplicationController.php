@@ -19,14 +19,21 @@ class ApplicationController extends Controller
     public function index(Request $request)
     {
         $filter = new ApplicationFilter();
-        $queryItems = $filter->transform($request);
+        $filterItems = $filter->transform($request);
 
-        if(count($queryItems) == 0){
-            return new ApplicationCollection(Application::paginate());
-        }else{
-            $applications = Application::where($queryItems)->paginate();
-            return new ApplicationCollection($applications->appends($request->query()));
+        $relationships = [];
+
+        if ($request->query('includeStudent')) {
+             $relationships[] = 'student';
         }
+
+        $application = Application::where($filterItems);
+
+       if(!empty($relationships)){
+            $application = $application->with($relationships);
+       }
+
+       return new ApplicationCollection($application->paginate()->appends($request->query()));
 
     }
 
@@ -51,6 +58,14 @@ class ApplicationController extends Controller
      */
     public function show(Application $application)
     {
+        $relationships = [];
+
+        if (request()->query('includeStudent')) {
+             $relationships[] = 'student';
+        }
+        if(!empty($relationships)){
+            $application->loadMissing($relationships);
+       }
         return new ApplicationResource($application);
     }
 

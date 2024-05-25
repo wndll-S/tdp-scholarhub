@@ -27,9 +27,9 @@ class Student extends Model
     {
         return $this->hasOne(LoginDetail::class, 'student_id');
     }
-    public function documents(): HasMany
+    public function documents(): HasOne
     {
-        return $this->hasMany(Document::class, 'student_id');
+        return $this->hasOne(Document::class, 'student_id');
     }
     public function education_detail(): HasOne
     {

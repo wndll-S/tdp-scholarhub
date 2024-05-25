@@ -19,7 +19,9 @@ class DocumentResource extends JsonResource
             'studentId' => $this->student_id,
             'schoolId' => $this->school_id,
             'documentType' => $this->document_type,
-            'filePath' => $this->file_type
+            'filePath' => $this->file_type,
+            'school' => new SchoolResource($this->whenLoaded('school')),
+            'student' => new StudentResource($this->whenLoaded('student'))
         ];
     }
 }

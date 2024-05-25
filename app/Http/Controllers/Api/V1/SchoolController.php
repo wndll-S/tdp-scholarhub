@@ -34,6 +34,9 @@ class SchoolController extends Controller
         if ($request->query('includeAnotherRelationship')) {
             $relationships[] = 'announcements'; // Replace with the actual relationship name
         }
+        if ($request->query('includeStudent')) {
+            $relationships[] = 'education_details.student'; // Replace with the actual relationship name
+        }
         // Add more conditions here for other relationships
 
         $school = School::where($filterItems);
@@ -77,19 +80,24 @@ In this code:
     2. If the query parameter is not present or cannot be interpreted as a boolean, FILTER_NULL_ON_FAILURE ensures the value is null.
     3. The relationships are only included if the corresponding query parameter evaluates to true.
 */
-
+/*
     $includeEducationalDetail = filter_var(request()->query('includeEducationalDetail'), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
     $includeDocument = filter_var(request()->query('includeDocument'), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
     $includeAnotherRelationship = filter_var(request()->query('includeAnotherRelationship'), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+*/
 
-    if ($includeEducationalDetail) {
+    if (request()->query('includeEducationalDetail')) {
         $relationships[] = 'education_details';
     }
-    if ($includeDocument) {
+    if (request()->query('includeDocument')) {
         $relationships[] = 'documents';
     }
-    if ($includeAnotherRelationship) {
+    if (request()->query('includeAnotherRelationship')) {
         $relationships[] = 'another_relationship'; // Replace with the actual relationship name
+    }
+    
+    if (request()->query('includeStudent')) {
+        $relationships[] = 'education_details.student'; // Replace with the actual relationship name
     }
     // Add more conditions here for other relationships
 

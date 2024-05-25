@@ -10,9 +10,9 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class School extends Model
 {
     use HasFactory;
-    public function documents(): HasMany
+    public function document(): HasOne
     {
-        return $this->hasMany(Document::class,'school_id');
+        return $this->hasOne(Document::class,'school_id');
     }
     public function announcements():HasMany
     {

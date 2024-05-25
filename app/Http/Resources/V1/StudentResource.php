@@ -33,7 +33,7 @@ class StudentResource extends JsonResource
             'studentAddress' => new StudentAddressResource($this->whenLoaded('student_address')),
             'familyBackground' => new FamilyBackgroundResource($this->whenLoaded('family_background')),
             'announcementRecipient' => ApplicationResource::collection($this->whenLoaded('announcement_recipient')),
-
+            'school' => new SchoolResource($this->whenLoaded('education_detail.school')),
         ];
     }
 }

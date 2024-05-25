@@ -19,14 +19,24 @@ class EducationDetailController extends Controller
     public function index(Request $request)
     {
         $filter = new EducationDetailFilter();
-        $queryItems = $filter->transform($request);
+        $filterItems = $filter->transform($request);
 
-        if(count($queryItems) == 0){
-            return new EducationDetailCollection(EducationDetail::paginate());
-        }else{
-            $education = EducationDetail::where($queryItems)->paginate();
-            return new EducationDetailCollection($education->appends($request->query()));
+        $relationships = [];
+
+            if ($request->query('includeSchool')) {
+                $relationships[] = 'school';
+            }
+            if ($request->query('includeStudent')) {
+                $relationships[] = 'student';
+            }
+
+        $educationDetail = EducationDetail::where($filterItems);
+
+        if(!empty($relationships)){
+                $educationDetail = $educationDetail->with($relationships);
         }
+
+        return new EducationDetailCollection($educationDetail->paginate()->appends($request->query()));
     }
 
     /**
@@ -50,6 +60,18 @@ class EducationDetailController extends Controller
      */
     public function show(EducationDetail $educationDetail)
     {
+        $relationships = [];
+
+            if (request()->query('includeSchool')) {
+                $relationships[] = 'school';
+            }
+        
+        if(!empty($relationships)){
+            $educationDetail->loadMissing($relationships);
+        }
+        if (request()->query('includeStudent')) {
+            $relationships[] = 'student';
+        }
         return new EducationDetailResource($educationDetail);
     }
 

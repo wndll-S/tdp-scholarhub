@@ -19,14 +19,25 @@ class DocumentController extends Controller
     public function index(Request $request)
     {
         $filter = new DocumentFilter();
-        $queryItems = $filter->transform($request);
+        $filterItems = $filter->transform($request);
 
-        if(count($queryItems) == 0){
-            return new DocumentCollection(Document::paginate());
-        }else{
-            $documents = Document::where($queryItems)->paginate();
-            return new DocumentCollection($documents->appends($request->query()));
+        $relationships = [];
+
+        if ($request->query('includeStudent')) {
+             $relationships[] = 'student';
         }
+        if ($request->query('includeSchool')) {
+             $relationships[] = 'school';
+        }
+
+        $document = Document::where($filterItems);
+
+       if(!empty($relationships)){
+            $document = $document->with($relationships);
+       }
+
+       return new DocumentCollection($document->paginate()->appends($request->query()));
+
     }
 
     /**
@@ -50,6 +61,18 @@ class DocumentController extends Controller
      */
     public function show(Document $document)
     {
+        $relationships = [];
+
+        if (request()->query('includeStudent')) {
+             $relationships[] = 'student';
+        }
+        if (request()->query('includeSchool')) {
+             $relationships[] = 'school';
+        }
+
+        if(!empty($relationships)){
+            $document->loadMissing($relationships);
+        }
         return new DocumentResource($document);
     }
 

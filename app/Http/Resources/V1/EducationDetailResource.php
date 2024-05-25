@@ -22,6 +22,8 @@ class EducationDetailResource extends JsonResource
             'course' => $this->course,
             'major' => $this->major,
             'yearLevel' => $this->year_level,
+            'school' => new SchoolResource($this->whenLoaded('school')),
+            'student' => new StudentResource($this->whenLoaded('student')),
         ];
     }
 }

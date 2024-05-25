@@ -19,14 +19,21 @@ class FamilyBackgroundController extends Controller
     public function index(Request $request)
     {
         $filter = new FamilyBackgroundFilter();
-        $queryItems = $filter->transform($request);
+        $filterItems = $filter->transform($request);
 
-        if(count($queryItems) == 0){
-            return new FamilyBackgroundCollection(FamilyBackground::paginate());
-        }else{
-            $familyBackground = FamilyBackground::where($queryItems)->paginate();
-            return new FamilyBackgroundCollection($familyBackground->appends($request->query()));
+        $relationships = [];
+
+        if ($request->query('includeGuardianParent')) {
+             $relationships[] = 'guardian_parent';
         }
+
+        $familyBackground = FamilyBackground::where($filterItems);
+
+       if(!empty($relationships)){
+            $familyBackground = $familyBackground->with($relationships);
+       }
+
+       return new FamilyBackgroundCollection($familyBackground->paginate()->appends($request->query()));
     }
 
     /**
@@ -50,6 +57,13 @@ class FamilyBackgroundController extends Controller
      */
     public function show(FamilyBackground $familyBackground)
     {
+        $relationships = [];
+        if (request()->query('includeGuardianParent')) {
+            $relationships[] = 'guardian_parent';
+        }
+        if(!empty($relationships)){
+            $familyBackground->loadMissing($relationships);
+        }
         return new FamilyBackgroundResource($familyBackground);
     }
 

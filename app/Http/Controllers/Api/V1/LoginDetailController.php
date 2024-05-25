@@ -2,21 +2,42 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Filters\V1\LoginDetailFilter;
 use App\Models\LoginDetail;
 use App\Http\Requests\StoreLoginDetailRequest;
 use App\Http\Requests\UpdateLoginDetailRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\LoginDetailResource;
 use App\Http\Resources\V1\LoginDetailCollection;
+use Illuminate\Http\Request;
 
 class LoginDetailController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return new LoginDetailCollection( LoginDetail::paginate());
+        $filter = new LoginDetailFilter();
+        $filterItems = $filter->transform($request);
+
+        $relationships = [];
+
+            if ($request->query('includeStudent')) {
+                $relationships[] = 'student';
+            }
+            if ($request->query('includeApplication')) {
+                $relationships[] = 'student.applications';
+            }
+        
+            
+        $loginDetail = LoginDetail::where($filterItems);
+
+        if(!empty($relationships)){
+            $loginDetail = $loginDetail->with($relationships);
+        }
+     
+        return new LoginDetailCollection($loginDetail->paginate()->appends($request->query()));
     }
 
     /**
@@ -40,7 +61,19 @@ class LoginDetailController extends Controller
      */
     public function show(LoginDetail $loginDetail)
     {
-        return new LoginDetailResource($loginDetail) ;
+        $relationships = [];
+
+            if (request()->query('includeStudent')) {
+                $relationships[] = 'student';
+            }
+            if (request()->query('includeApplication')) {
+                $relationships[] = 'student.applications';
+            }
+            if(!empty($relationships)){
+                $loginDetail->loadMissing($relationships);
+            }
+
+            return new LoginDetailResource($loginDetail);
     }
 
     /**

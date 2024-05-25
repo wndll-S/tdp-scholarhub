@@ -18,7 +18,8 @@ class FamilyBackgroundResource extends JsonResource
             'id' => $this->id,
             'studentId' => $this->student_id,
             'totalGrossIncome' => $this->total_gross_income,
-            'numberOfSiblings' => $this->number_of_siblings
+            'numberOfSiblings' => $this->number_of_siblings,
+            'guardianParent' => GuardianParentResource::collection($this->whenLoaded('guardian_parent')),
         ];
     }
 }

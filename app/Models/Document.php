@@ -9,10 +9,10 @@ class Document extends Model
 {
     use HasFactory;
     public function student()
-    {
+    { 
         return $this->belongsTo(Student::class);
     }
-    public function school()
+    public function school()   
     {
         return $this->belongsTo(School::class);
     }

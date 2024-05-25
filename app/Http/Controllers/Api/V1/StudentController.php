@@ -28,24 +28,31 @@ class StudentController extends Controller
           if ($request->query('includeApplication')) {
                $relationships[] = 'applications';
           }
-       if($request->query('includeStudentAddress')){
-            $relationships[] = 'student_address';
-       }
-       if($request->query('includeFamilyBackground')){
-            $relationships[] = 'family_background';
-       }
-       if($request->query('includeLoginDetail')){
-            $relationships[] = 'login_detail';
-       }
-       if($request->query('includeDocuments')){
-            $relationships[] = 'documents';
-       }
-       if($request->query('includeEducationDetail')){
-            $relationships[] = 'education_detail';
-       }
-       if($request->query('includeAnnouncementRecipient')){
-            $relationships[] = 'announcement_recipient';
-       }
+          if($request->query('includeStudentAddress')){
+               $relationships[] = 'student_address';
+          }
+          if($request->query('includeFamilyBackground')){
+               $relationships[] = 'family_background';
+          }
+          if($request->query('includeLoginDetail')){
+               $relationships[] = 'login_detail';
+          }
+          if($request->query('includeDocuments')){
+               $relationships[] = 'documents';
+          }
+          if($request->query('includeEducationDetail')){
+               $relationships[] = 'education_detail';
+          }
+          if($request->query('includeAnnouncementRecipient')){
+               $relationships[] = 'announcement_recipient';
+          }
+          if ($request->query('includeGuardianParent')) {
+               $relationships[] = 'family_background.guardian_parent';
+          }
+          if($request->query('includeSchool')){
+               $relationships[] = 'education_detail.school';
+          }
+     
 
        $student = Student::where($filterItems);
 
@@ -100,6 +107,12 @@ class StudentController extends Controller
        }
        if(request()->query('includeAnnouncementRecipient')){
             $relationships[] = 'announcement_recipient';
+       }
+       if(request()->query('includeGuardianParent')){
+            $relationships[] = 'family_background.guardian_parent';
+       }
+       if(request()->query('includeSchool')){
+            $relationships[] = 'education_detail.school';
        }
 
        if(!empty($relationships)){

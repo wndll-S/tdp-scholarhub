@@ -20,6 +20,9 @@ class LoginDetailResource extends JsonResource
             'emailAddress'  => $this->email_address,
             'mobileNumber'  => $this->mobile_number,
             'password'  => $this-> password,
+            'student' => new StudentResource($this->whenLoaded('student')),
+            'application' => new ApplicationResource($this->whenLoaded('applications'))
+
         ];
     }
 }

@@ -24,7 +24,8 @@ class SchoolResource extends JsonResource
             'password' => $this->password,
             'educationDetails' => EducationDetailResource::collection($this->whenLoaded('education_details')),
             'documents' => DocumentResource::collection($this->whenLoaded('documents')),
-            'announcements' => DocumentResource::collection($this->whenLoaded('announcements')),
+            'student' => new StudentResource($this->whenLoaded('education_detail.student')),
+            //'announcements' => Announcementresource::collection($this->whenLoaded('announcements')),
         ];
     }
 }
