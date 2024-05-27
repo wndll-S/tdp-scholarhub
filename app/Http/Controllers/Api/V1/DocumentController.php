@@ -53,7 +53,17 @@ class DocumentController extends Controller
      */
     public function store(StoreDocumentRequest $request)
     {
-        //
+        $validatedData = $request->validated();
+
+        // Handle the file upload
+        if ($request->hasFile('file')) {
+            $filePath = $request->file('file')->store('documents');
+            $validatedData['file_path'] = $filePath;
+        }
+
+        $document = Document::create($validatedData);
+
+        return response()->json($document, 201);
     }
 
     /**

@@ -25,9 +25,12 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], f
     Route::apiResource('admin', AdminController::class);
     Route::apiResource('studentAddress', StudentAddressController::class);
     Route::apiResource('document', DocumentController::class);
-    Route::apiResource('school', SchoolController::class);
+    Route::apiResource('schools', SchoolController::class);
     Route::apiResource('educationDetail', EducationDetailController::class);
     Route::apiResource('familyBackground', FamilyBackgroundController::class);
     Route::apiResource('guardianParent', GuardianParentController::class);
     
+    Route::post('/students/register', [StudentController::class, 'register'])->name('students.register');
 });
+
+Route::post('/documents', [DocumentController::class, 'store']);

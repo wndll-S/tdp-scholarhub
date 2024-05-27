@@ -11,7 +11,7 @@ class StoreLoginDetailRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,18 @@ class StoreLoginDetailRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'student_id' => 'required|exists:students,id',
+            'email_address' => 'required|email|unique:login_details,email_address|max:50',
+            'mobile_number' => 'required|digits:10|unique:login_details,mobile_number',
+            'password' => 'required|string',
         ];
+    }
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'student_id' => $this->studentId,
+            'email_address' => $this->emailAddress,
+            'mobile_number' => $this->mobileNumber,
+        ]);
     }
 }

@@ -42,7 +42,9 @@ class AdminController extends Controller
      */
     public function store(StoreAdminRequest $request)
     {
-        //
+            $validatedData = $request->validated();
+            $admin = Admin::create($validatedData);
+            return response()->json($admin, 201);
     }
 
     /**

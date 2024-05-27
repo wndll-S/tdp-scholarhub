@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('education_details', function (Blueprint $table) {
             $table->id();
-            $table->uuid('student_id');
+            $table->uuid('student_id')->unique();
             $table->uuid('school_id');
-            $table->string('lrn', 12);
+            $table->string('lrn', 12) ->nullable();
             $table->string('course', 50);
             $table->string('major',50);
             $table->integer('year_level');

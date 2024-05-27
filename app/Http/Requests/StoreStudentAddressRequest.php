@@ -11,7 +11,7 @@ class StoreStudentAddressRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,19 @@ class StoreStudentAddressRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'student_id' => 'required|exists:students,id',
+            'barangay' => 'required|string',
+            'city_town' => 'required|string',
+            'district' => 'required|integer',
+            'zip_code'=> 'required|integer',
         ];
+    }
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'student_id' => $this->studentId,
+            'city_town' => $this->cityTown,
+            'zip_code' => $this->zipCode,
+        ]);
     }
 }

@@ -11,7 +11,7 @@ class StoreEducationDetailRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,20 @@ class StoreEducationDetailRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'student_id' => 'required|exists:students,id',
+            'school_id' => 'required|exists:schools,id',
+            'lrn' => 'nullable|string|max:12',
+            'course' => 'required|string|max:50',
+            'major' => 'required|string|max:50',
+            'year_level' => 'required|integer|min:1|max:5',
         ];
+    }
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'student_id' => $this->studentId,
+            'school_id' => $this->schoolId,
+            'year_level' => $this->yearLevel,
+        ]);
     }
 }

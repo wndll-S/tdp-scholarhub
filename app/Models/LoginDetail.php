@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class LoginDetail extends Model
 {
-    use HasFactory;
+    use HasFactory, Uuids;
     public function student()
     {
         return $this->belongsTo(Student::class);
@@ -15,12 +16,9 @@ class LoginDetail extends Model
     public $incrementing = false;
     protected $keyType = 'string';
     protected $fillable = [
-        'id',
         'student_id',
         'email_address',
         'mobile_number',
         'password',
-        'created_at',
-        'updated_at',
     ];
 }

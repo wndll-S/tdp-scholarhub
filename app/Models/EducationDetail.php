@@ -17,14 +17,11 @@ class EducationDetail extends Model
         return $this->belongsTo(School::class);
     }
     protected $fillable = [
-        'id',
         'student_id',
         'school_id',
         'lrn',
         'course',
         'major',
         'year_level',
-        'created_at',
-        'updated_at',
     ];
 }

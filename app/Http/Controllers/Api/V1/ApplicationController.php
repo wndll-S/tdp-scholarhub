@@ -50,7 +50,9 @@ class ApplicationController extends Controller
      */
     public function store(StoreApplicationRequest $request)
     {
-        //
+        $validatedData = $request->validated();
+        $application = Application::create($validatedData);
+        return response()->json($application, 201);
     }
 
     /**

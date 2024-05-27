@@ -11,7 +11,7 @@ class StoreAdminRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,17 @@ class StoreAdminRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'username' => 'required|string|unique:admins,username|max:50',
+            'email_address' => 'required|email|unique:admins,email_address|max:50',
+            'password' => 'required|string',
+            'role' => 'required|string|in:Super Admin,Screener,Reports Viewer',
+            'status' => 'required|string|in:Suspended,Active,Deleted',
         ];
+    }
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'email_address' => $this->emailAddress,
+        ]);
     }
 }

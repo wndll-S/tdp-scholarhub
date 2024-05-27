@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class StudentAddress extends Model
 {
-    use HasFactory;
+    use HasFactory, Uuids;
     public function student()
     {
         return $this->belongsTo(Student::class);
@@ -15,13 +16,10 @@ class StudentAddress extends Model
     public $incrementing = false;
     protected $keyType = 'string';
     protected $fillable = [
-        'id',
         'student_id',
         'barangay',
         'city_town',
         'district',
         'zip_code',
-        'created_at',
-        'updated_at',
     ];
 }

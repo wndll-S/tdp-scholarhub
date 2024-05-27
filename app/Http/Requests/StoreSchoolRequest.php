@@ -11,7 +11,7 @@ class StoreSchoolRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,20 @@ class StoreSchoolRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string',
+            'address' => 'required|string',
+            'school_type' => 'required|string|in:Private,Public',
+            'email_address' => 'required|email|unique:schools,email_address',
+            'contact_number' => 'required|digits:10',
+            'password' => 'required|string|min:8',
         ];
+    }
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'email_address' => $this->emailAddress,
+            'school_type' => $this->schoolType,
+            'contact_number' => $this->contactNumber
+        ]);
     }
 }

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('family_backgrounds', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('student_id');
+            $table->uuid('student_id')->unique();
             $table->double('total_gross_income');
             $table->integer('number_of_siblings');
             $table->timestamps();

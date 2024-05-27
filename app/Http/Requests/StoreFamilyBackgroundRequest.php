@@ -11,7 +11,7 @@ class StoreFamilyBackgroundRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,17 @@ class StoreFamilyBackgroundRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'student_id' => 'required|exists:students,id',
+            'total_gross_income' => 'required|integer',
+            'number_of_siblings' => 'required|integer|min:0',
         ];
+    }
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'student_id' => $this->studentId,
+            'total_gross_income' => $this->totalGrossIncome,
+            'number_of_siblings' => $this->numberOfSiblings,
+        ]);
     }
 }

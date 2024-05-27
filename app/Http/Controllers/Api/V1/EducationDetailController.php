@@ -52,7 +52,9 @@ class EducationDetailController extends Controller
      */
     public function store(StoreEducationDetailRequest $request)
     {
-        
+            $validatedData = $request->validated();
+            $educationDetail = EducationDetail::create($validatedData);
+            return response()->json($educationDetail, 201);
     }
 
     /**

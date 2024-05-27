@@ -17,12 +17,9 @@ class Document extends Model
         return $this->belongsTo(School::class);
     }
     protected $fillable = [
-        'id',
         'student_id',
         'school_id',
         'document_type',
         'file_path',
-        'created_at',
-        'updated_at',
     ];
 }

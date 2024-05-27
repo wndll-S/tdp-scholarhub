@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-
+use App\Traits\Uuids;
 class Student extends Model
 {
     use HasFactory;
+    use Uuids;
 
     public function applications(): HasOne
     {
@@ -39,11 +40,10 @@ class Student extends Model
     {
         return $this->hasMany(AnnouncementRecipient::class, 'student_id');
     }
-
+    public $timestamps = true;
     public $incrementing = false;
     protected $keyType = 'string';
     protected $fillable = [
-        'id',
         'first_name',
         'middle_name',
         'last_name',
@@ -54,7 +54,5 @@ class Student extends Model
         'civil_status',
         'citizenship',
         'ip_affiliation',
-        'created_at',
-        'updated_at',
     ];
 }

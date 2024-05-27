@@ -53,7 +53,9 @@ class LoginDetailController extends Controller
      */
     public function store(StoreLoginDetailRequest $request)
     {
-        //
+            $validatedData = $request->validated();
+            $loginDetail = LoginDetail::create($validatedData);
+            return response()->json($loginDetail, 201);
     }
 
     /**

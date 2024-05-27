@@ -49,7 +49,9 @@ class FamilyBackgroundController extends Controller
      */
     public function store(StoreFamilyBackgroundRequest $request)
     {
-        //
+            $validatedData = $request->validated();
+            $familyBackground = FamilyBackground::create($validatedData);
+            return response()->json($familyBackground, 201);
     }
 
     /**

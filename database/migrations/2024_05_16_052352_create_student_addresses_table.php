@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('student_addresses', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('student_id');
+            $table->uuid('student_id')->unique();
             $table->string('barangay', 50);
             $table->string('city_town', 50);
-            $table->integer('district');
+            $table->string('district',15);
             $table->integer('zip_code');
             $table->timestamps();
 

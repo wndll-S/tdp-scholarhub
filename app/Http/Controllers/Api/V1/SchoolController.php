@@ -63,7 +63,9 @@ class SchoolController extends Controller
      */
     public function store(StoreSchoolRequest $request)
     {
-        //
+            $validatedData = $request->validated();
+            $schools = School::create($validatedData);
+            return response()->json($schools, 201);
     }
 
     /**

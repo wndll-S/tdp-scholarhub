@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -10,6 +11,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class School extends Model
 {
     use HasFactory;
+    use Uuids;
+    protected $table = 'schools';
     public function document(): HasOne
     {
         return $this->hasOne(Document::class,'school_id');
@@ -22,17 +25,15 @@ class School extends Model
     {
         return $this->hasMany(EducationDetail::class, 'school_id');
     }
+
     public $incrementing = false;
     protected $keyType = 'string';
     protected $fillable = [
-        'id',
         'name',
         'address',
         'school_type',
         'email_address',
         'contact_number',
         'password',
-        'created_at',
-        'updated_at',
     ];
 }

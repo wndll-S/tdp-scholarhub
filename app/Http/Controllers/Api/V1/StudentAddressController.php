@@ -42,7 +42,9 @@ class StudentAddressController extends Controller
      */
     public function store(StoreStudentAddressRequest $request)
     {
-        //
+            $validatedData = $request->validated();
+            $studentAddress = StudentAddress::create($validatedData);
+            return response()->json($studentAddress, 201);
     }
 
     /**

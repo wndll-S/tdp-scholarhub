@@ -42,7 +42,9 @@ class GuardianParentController extends Controller
      */
     public function store(StoreGuardianParentRequest $request)
     {
-        //
+            $validatedData = $request->validated();
+            $guardianParent = GuardianParent::create($validatedData);
+            return response()->json($guardianParent, 201);
     }
 
     /**

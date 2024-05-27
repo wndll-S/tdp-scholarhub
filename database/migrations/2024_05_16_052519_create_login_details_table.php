@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('login_details', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('student_id');
+            $table->uuid('student_id')->unique();
             $table->string('email_address', 50)->unique();
             $table->float('mobile_number',10)->unique();
             $table->text('password');

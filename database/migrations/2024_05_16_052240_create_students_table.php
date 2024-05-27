@@ -16,15 +16,16 @@ return new class extends Migration
             $table->string('first_name', 50);
             $table->string('middle_name', 50);
             $table->string('last_name', 50);
-            $table->enum('name_ext',['Sr.', 'Jr.', 'III']);
-            $table->date('birthday');
-            $table->string('birth_place', 255);
+            $table->enum('name_ext',['Sr.', 'Jr.', 'III'])->nullable();
+            $table->date('birthday')->nullable();
+            $table->string('birth_place', 255)->nullable();
             $table->enum('sex', ['male', 'female'])
                     ->nullable();
-            $table->string('citizenship');
+            $table->string('citizenship')->nullable();
             $table->enum('civil_status', ['Single', 'Married', 'Annulled', 'Widowed', 'Separated', 'Others'])
                     ->default('Single');
-            $table->string('ip_affiliation', 255);
+            $table->string('ip_affiliation', 255)
+                    ->nullable();
             $table->timestamps();
         });
     }

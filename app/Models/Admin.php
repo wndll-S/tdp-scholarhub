@@ -21,7 +21,8 @@ class Admin extends Model
     {
         return  $this->hasMany(Announcement::class, 'announcement_id');
     }
-    public $incrementing = false;
+    public $incrementing = true;
+    
     protected $keyType = 'string';
     protected $fillable = [
         'id',

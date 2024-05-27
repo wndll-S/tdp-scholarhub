@@ -13,7 +13,6 @@ class GuardianParent extends Model
         return $this->belongsTo(FamilyBackground::class);
     }
     protected $fillable = [
-        'id',
         'family_background_id',
         'first_name',
         'middle_name',
@@ -26,7 +25,5 @@ class GuardianParent extends Model
         'annual_gross_income',
         'status',
         'relationship',
-        'created_at',
-        'updated_at',
     ];
 }
